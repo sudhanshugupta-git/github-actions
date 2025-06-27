@@ -119,3 +119,26 @@
 - You may want to add additional steps for testing, linting, or other CI/CD practices as needed.
 
 This setup provides a basic CI/CD pipeline using GitHub Actions for your Dockerized applications. You can expand upon this by adding more complex workflows, notifications, or deployment strategies as your project grows.
+
+Here’s what each action is doing internally:
+
+- name: Checkout code
+  uses: actions/checkout@v3
+  Downloads (clones) your repository’s code from GitHub into the runner’s workspace.
+  Makes all your files available for the next steps in the workflow.
+  Equivalent manual command: git clone <your-repo-url>
+
+docker/setup-buildx-action@v3
+Installs and configures Docker Buildx, enabling advanced Docker build features.
+Equivalent to running: docker buildx create --use
+
+docker/login-action@v3
+Logs in to Docker Hub (or another registry) using your provided credentials.
+Equivalent to running: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+docker/build-push-action@v5
+Builds your Docker image and pushes it to the registry.
+Equivalent to running:
+
+- docker buildx build --push --tag sudhanshugpta/server:latest ./server
+- docker buildx build --push --tag sudhanshugpta/app:latest ./app
